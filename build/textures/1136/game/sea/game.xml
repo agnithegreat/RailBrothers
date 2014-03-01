@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="game.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="back.png"	x="0"	y="310"	width="71"	height="640" frameX="-0" frameY="-0" frameWidth="71" frameHeight="640"/>
+	<SubTexture name="cloud1.png"	x="0"	y="199"	width="85"	height="19" frameX="-0" frameY="-0" frameWidth="85" frameHeight="19"/>
+	<SubTexture name="cloud2.png"	x="0"	y="0"	width="231"	height="51" frameX="-0" frameY="-0" frameWidth="231" frameHeight="51"/>
+	<SubTexture name="cloud3.png"	x="0"	y="53"	width="171"	height="41" frameX="-0" frameY="-0" frameWidth="171" frameHeight="41"/>
+	<SubTexture name="cloud4.png"	x="0"	y="96"	width="104"	height="25" frameX="-0" frameY="-0" frameWidth="104" frameHeight="25"/>
+	<SubTexture name="sand.png"	x="73"	y="235"	width="71"	height="263" frameX="-0" frameY="-0" frameWidth="71" frameHeight="263"/>
+	<SubTexture name="sea.png"	x="0"	y="235"	width="71"	height="73" frameX="-0" frameY="-0" frameWidth="71" frameHeight="73"/>
+	<SubTexture name="ship.png"	x="69"	y="952"	width="60"	height="66" frameX="-0" frameY="-0" frameWidth="60" frameHeight="66"/>
+	<SubTexture name="spot1.png"	x="0"	y="992"	width="59"	height="16" frameX="-0" frameY="-0" frameWidth="59" frameHeight="16"/>
+	<SubTexture name="spot2.png"	x="73"	y="546"	width="40"	height="12" frameX="-0" frameY="-0" frameWidth="40" frameHeight="12"/>
+	<SubTexture name="spot3.png"	x="73"	y="500"	width="58"	height="15" frameX="-0" frameY="-0" frameWidth="58" frameHeight="15"/>
+	<SubTexture name="spot4.png"	x="0"	y="972"	width="67"	height="18" frameX="-0" frameY="-0" frameWidth="67" frameHeight="18"/>
+	<SubTexture name="spot5.png"	x="73"	y="517"	width="58"	height="15" frameX="-0" frameY="-0" frameWidth="58" frameHeight="15"/>
+	<SubTexture name="spot6.png"	x="73"	y="560"	width="40"	height="12" frameX="-0" frameY="-0" frameWidth="40" frameHeight="12"/>
+	<SubTexture name="spot7.png"	x="0"	y="952"	width="67"	height="18" frameX="-0" frameY="-0" frameWidth="67" frameHeight="18"/>
+	<SubTexture name="wave1.png"	x="0"	y="179"	width="86"	height="18" frameX="-0" frameY="-0" frameWidth="86" frameHeight="18"/>
+	<SubTexture name="wave2.png"	x="0"	y="141"	width="98"	height="16" frameX="-0" frameY="-0" frameWidth="98" frameHeight="16"/>
+	<SubTexture name="wave3.png"	x="0"	y="1010"	width="49"	height="10" frameX="-0" frameY="-0" frameWidth="49" frameHeight="10"/>
+	<SubTexture name="wave4.png"	x="0"	y="220"	width="81"	height="13" frameX="-0" frameY="-0" frameWidth="81" frameHeight="13"/>
+	<SubTexture name="wave5.png"	x="0"	y="159"	width="86"	height="18" frameX="-0" frameY="-0" frameWidth="86" frameHeight="18"/>
+	<SubTexture name="wave6.png"	x="0"	y="123"	width="98"	height="16" frameX="-0" frameY="-0" frameWidth="98" frameHeight="16"/>
+	<SubTexture name="wave7.png"	x="73"	y="534"	width="49"	height="10" frameX="-0" frameY="-0" frameWidth="49" frameHeight="10"/>
+</TextureAtlas>

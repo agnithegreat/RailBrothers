@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="gui.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="button_down.png"	x="1546"	y="0"	width="207"	height="91" frameX="-1" frameY="-23" frameWidth="208" frameHeight="114"/>
+	<SubTexture name="button_up.png"	x="1336"	y="0"	width="208"	height="114" frameX="-0" frameY="-0" frameWidth="208" frameHeight="114"/>
+	<SubTexture name="circle.png"	x="1819"	y="41"	width="49"	height="49" frameX="-0" frameY="-0" frameWidth="49" frameHeight="49"/>
+	<SubTexture name="finish.png"	x="1870"	y="0"	width="25"	height="90" frameX="-0" frameY="-0" frameWidth="25" frameHeight="90"/>
+	<SubTexture name="line.png"	x="0"	y="106"	width="882"	height="7" frameX="-0" frameY="-0" frameWidth="882" frameHeight="7"/>
+	<SubTexture name="rail.png"	x="1546"	y="93"	width="71"	height="28" frameX="-0" frameY="-0" frameWidth="71" frameHeight="28"/>
+	<SubTexture name="sleeper.png"	x="1106"	y="99"	width="39"	height="21" frameX="-0" frameY="-0" frameWidth="39" frameHeight="21"/>
+	<SubTexture name="steer.png"	x="1755"	y="0"	width="111"	height="39" frameX="-0" frameY="-0" frameWidth="111" frameHeight="39"/>
+	<SubTexture name="top_panel.png"	x="0"	y="0"	width="1104"	height="104" frameX="-0" frameY="-0" frameWidth="1104" frameHeight="104"/>
+	<SubTexture name="trolley.png"	x="1106"	y="0"	width="228"	height="97" frameX="-0" frameY="-0" frameWidth="228" frameHeight="97"/>
+	<SubTexture name="wheel.png"	x="1755"	y="41"	width="62"	height="61" frameX="-0" frameY="-0" frameWidth="62" frameHeight="61"/>
+</TextureAtlas>

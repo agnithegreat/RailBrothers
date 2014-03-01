@@ -1,0 +1,791 @@
+{
+    "heroes": [
+        {
+            "id": 1,
+            "name": "hero0",
+            "armature": "WIZARD_DB",
+            "difficulty": 100,
+            "unlockcost": 0
+        },
+        {
+            "id": 2,
+            "name": "hero1",
+            "armature": "WITCH_DB",
+            "difficulty": 95,
+            "unlockcost": 3000
+        },
+        {
+            "id": 3,
+            "name": "hero2",
+            "armature": "WITCH_DB",
+            "difficulty": 90,
+            "unlockcost": 6000
+        },
+        {
+            "id": 4,
+            "name": "hero3",
+            "armature": "WITCH_DB",
+            "difficulty": 85,
+            "unlockcost": 12000
+        },
+        {
+            "id": 5,
+            "name": "hero4",
+            "armature": "WITCH_DB",
+            "difficulty": 80,
+            "unlockcost": 20000
+        },
+        {
+            "id": 6,
+            "name": "hero5",
+            "armature": "WITCH_DB",
+            "difficulty": 75,
+            "unlockcost": 40000
+        },
+        {
+            "id": 7,
+            "name": "hero6",
+            "armature": "WITCH_DB",
+            "difficulty": 70,
+            "unlockcost": 70000
+        }
+    ],
+    "levels": [
+        {
+            "id": 1,
+            "location": "desert",
+            "hero": 0,
+            "difficulty": 50,
+            "length": 40000,
+            "bonus": "100",
+            "unlockcost": 0
+        },
+        {
+            "id": 2,
+            "location": "desert",
+            "hero": 0,
+            "difficulty": 52,
+            "length": 40000,
+            "bonus": "100",
+            "unlockcost": 0
+        },
+        {
+            "id": 3,
+            "location": "desert",
+            "hero": 0,
+            "difficulty": 54,
+            "length": 40000,
+            "bonus": "100",
+            "unlockcost": 0
+        },
+        {
+            "id": 4,
+            "location": "desert",
+            "hero": 0,
+            "difficulty": 56,
+            "length": 40000,
+            "bonus": "100",
+            "unlockcost": 0
+        },
+        {
+            "id": 5,
+            "location": "desert",
+            "hero": 0,
+            "difficulty": 65,
+            "length": 40000,
+            "bonus": "200",
+            "unlockcost": 0
+        },
+        {
+            "id": 6,
+            "location": "snow",
+            "hero": 0,
+            "difficulty": 60,
+            "length": 45000,
+            "bonus": "200",
+            "unlockcost": 3000
+        },
+        {
+            "id": 7,
+            "location": "snow",
+            "hero": 0,
+            "difficulty": 70,
+            "length": 45000,
+            "bonus": "300",
+            "unlockcost": 0
+        },
+        {
+            "id": 8,
+            "location": "snow",
+            "hero": 0,
+            "difficulty": 80,
+            "length": 45000,
+            "bonus": "300",
+            "unlockcost": 0
+        },
+        {
+            "id": 9,
+            "location": "snow",
+            "hero": 0,
+            "difficulty": 90,
+            "length": 45000,
+            "bonus": "300",
+            "unlockcost": 0
+        },
+        {
+            "id": 10,
+            "location": "snow",
+            "hero": 0,
+            "difficulty": 100,
+            "length": 45000,
+            "bonus": "400",
+            "unlockcost": 0
+        },
+        {
+            "id": 11,
+            "location": "sea",
+            "hero": 1,
+            "difficulty": 74,
+            "length": 45000,
+            "bonus": "300",
+            "unlockcost": 6000
+        },
+        {
+            "id": 12,
+            "location": "sea",
+            "hero": 1,
+            "difficulty": 79,
+            "length": 45000,
+            "bonus": "400",
+            "unlockcost": 0
+        },
+        {
+            "id": 13,
+            "location": "sea",
+            "hero": 1,
+            "difficulty": 84,
+            "length": 45000,
+            "bonus": "400",
+            "unlockcost": 0
+        },
+        {
+            "id": 14,
+            "location": "sea",
+            "hero": 1,
+            "difficulty": 90,
+            "length": 45000,
+            "bonus": "400",
+            "unlockcost": 0
+        },
+        {
+            "id": 15,
+            "location": "sea",
+            "hero": 1,
+            "difficulty": 105,
+            "length": 45000,
+            "bonus": "500",
+            "unlockcost": 0
+        },
+        {
+            "id": 16,
+            "location": "mountain",
+            "hero": 2,
+            "difficulty": 89,
+            "length": 50000,
+            "bonus": "400",
+            "unlockcost": 12000
+        },
+        {
+            "id": 17,
+            "location": "mountain",
+            "hero": 2,
+            "difficulty": 93,
+            "length": 50000,
+            "bonus": "500",
+            "unlockcost": 0
+        },
+        {
+            "id": 18,
+            "location": "mountain",
+            "hero": 2,
+            "difficulty": 97,
+            "length": 50000,
+            "bonus": "600",
+            "unlockcost": 0
+        },
+        {
+            "id": 19,
+            "location": "mountain",
+            "hero": 2,
+            "difficulty": 106,
+            "length": 50000,
+            "bonus": "600",
+            "unlockcost": 0
+        },
+        {
+            "id": 20,
+            "location": "mountain",
+            "hero": 2,
+            "difficulty": 112,
+            "length": 50000,
+            "bonus": "700",
+            "unlockcost": 0
+        },
+        {
+            "id": 21,
+            "location": "forest",
+            "hero": 3,
+            "difficulty": 95,
+            "length": 60000,
+            "bonus": "600",
+            "unlockcost": 20000
+        },
+        {
+            "id": 22,
+            "location": "forest",
+            "hero": 3,
+            "difficulty": 98,
+            "length": 60000,
+            "bonus": "700",
+            "unlockcost": 0
+        },
+        {
+            "id": 23,
+            "location": "forest",
+            "hero": 3,
+            "difficulty": 103,
+            "length": 60000,
+            "bonus": "700",
+            "unlockcost": 0
+        },
+        {
+            "id": 24,
+            "location": "forest",
+            "hero": 3,
+            "difficulty": 112,
+            "length": 60000,
+            "bonus": "700",
+            "unlockcost": 0
+        },
+        {
+            "id": 25,
+            "location": "forest",
+            "hero": 3,
+            "difficulty": 118,
+            "length": 60000,
+            "bonus": "800",
+            "unlockcost": 0
+        },
+        {
+            "id": 26,
+            "location": "jungle",
+            "hero": 4,
+            "difficulty": 100,
+            "length": 70000,
+            "bonus": "700",
+            "unlockcost": 40000
+        },
+        {
+            "id": 27,
+            "location": "jungle",
+            "hero": 4,
+            "difficulty": 104,
+            "length": 70000,
+            "bonus": "800",
+            "unlockcost": 0
+        },
+        {
+            "id": 28,
+            "location": "jungle",
+            "hero": 4,
+            "difficulty": 109,
+            "length": 70000,
+            "bonus": "800",
+            "unlockcost": 0
+        },
+        {
+            "id": 29,
+            "location": "jungle",
+            "hero": 4,
+            "difficulty": 119,
+            "length": 70000,
+            "bonus": "800",
+            "unlockcost": 0
+        },
+        {
+            "id": 30,
+            "location": "jungle",
+            "hero": 4,
+            "difficulty": 125,
+            "length": 70000,
+            "bonus": "800",
+            "unlockcost": 0
+        },
+        {
+            "id": 31,
+            "location": "moon",
+            "hero": 5,
+            "difficulty": 134,
+            "length": 70000,
+            "bonus": "900",
+            "unlockcost": 50000
+        },
+        {
+            "id": 32,
+            "location": "moon",
+            "hero": 6,
+            "difficulty": 129,
+            "length": 70000,
+            "bonus": "1000",
+            "unlockcost": 50000
+        },
+        {
+            "id": 33,
+            "location": "moon",
+            "hero": 6,
+            "difficulty": 136,
+            "length": 70000,
+            "bonus": "2000",
+            "unlockcost": 100000
+        }
+    ],
+    "sounds": [
+        {
+            "id": 1,
+            "event": "main",
+            "sound": "main",
+            "variants": 0,
+            "loop": 1,
+            "type": "music"
+        },
+        {
+            "id": 2,
+            "event": "ingame",
+            "value": "forest",
+            "sound": "ingame_forest",
+            "variants": 0,
+            "loop": 1,
+            "type": "music"
+        },
+        {
+            "id": 3,
+            "event": "ingame",
+            "value": "desert",
+            "sound": "ingame_forest",
+            "variants": 0,
+            "loop": 1,
+            "type": "music"
+        },
+        {
+            "id": 4,
+            "event": "ingame",
+            "value": "snow",
+            "sound": "ingame_forest",
+            "variants": 0,
+            "loop": 1,
+            "type": "music"
+        },
+        {
+            "id": 5,
+            "event": "ingame",
+            "value": "inferno",
+            "sound": "ingame_inferno",
+            "variants": 0,
+            "loop": 1,
+            "type": "music"
+        },
+        {
+            "id": 6,
+            "event": "ingame",
+            "value": "stone",
+            "sound": "ingame_inferno",
+            "variants": 0,
+            "loop": 1,
+            "type": "music"
+        },
+        {
+            "id": 7,
+            "event": "level",
+            "value": "desert",
+            "sound": "ambient_desert",
+            "variants": 0,
+            "loop": 1,
+            "type": "sound"
+        },
+        {
+            "id": 8,
+            "event": "level",
+            "value": "forest",
+            "sound": "ambient_forest",
+            "variants": 0,
+            "loop": 1,
+            "type": "sound"
+        },
+        {
+            "id": 9,
+            "event": "level",
+            "value": "inferno",
+            "sound": "ambient_inferno",
+            "variants": 0,
+            "loop": 1,
+            "type": "sound"
+        },
+        {
+            "id": 10,
+            "event": "level",
+            "value": "snow",
+            "sound": "ambient_snow",
+            "variants": 0,
+            "loop": 1,
+            "type": "sound"
+        },
+        {
+            "id": 11,
+            "event": "level",
+            "value": "stone",
+            "sound": "ambient_stone",
+            "variants": 0,
+            "loop": 1,
+            "type": "sound"
+        },
+        {
+            "id": 12,
+            "event": "active",
+            "value": "cannon_start",
+            "sound": "cannon_start",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 13,
+            "event": "active",
+            "value": "cannon_end",
+            "sound": "cannon_end",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 14,
+            "event": "active",
+            "value": "mana",
+            "sound": "mana_add",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 15,
+            "event": "active",
+            "value": "repair",
+            "sound": "repair",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 16,
+            "event": "active",
+            "value": "shield",
+            "sound": "energy_shield",
+            "variants": 2,
+            "type": "sound"
+        },
+        {
+            "id": 17,
+            "event": "active",
+            "value": "flame_thrower",
+            "sound": "flamethrower",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 18,
+            "event": "active",
+            "value": "machine_gun",
+            "sound": "machine_gun",
+            "variants": 2,
+            "type": "sound"
+        },
+        {
+            "id": 19,
+            "event": "spell",
+            "value": "fire",
+            "sound": "fire",
+            "variants": 0,
+            "loop": 1,
+            "type": "sound"
+        },
+        {
+            "id": 20,
+            "event": "spell",
+            "value": "lightning",
+            "sound": "lightning",
+            "variants": 6,
+            "type": "sound"
+        },
+        {
+            "id": 21,
+            "event": "spell",
+            "value": "wind",
+            "sound": "wind",
+            "variants": 0,
+            "loop": 1,
+            "type": "sound"
+        },
+        {
+            "id": 22,
+            "event": "spell",
+            "value": "fireball",
+            "sound": "fireball",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 23,
+            "event": "spell",
+            "value": "swamp",
+            "sound": "swamp",
+            "variants": 0,
+            "loop": 1,
+            "type": "sound"
+        },
+        {
+            "id": 24,
+            "event": "spell",
+            "value": "meteor",
+            "sound": "meteor",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 25,
+            "event": "button",
+            "sound": "button",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 26,
+            "event": "button",
+            "value": "block",
+            "sound": "button_block",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 27,
+            "event": "attack",
+            "value": "attack",
+            "sound": "attack",
+            "variants": 2,
+            "type": "sound"
+        },
+        {
+            "id": 28,
+            "event": "attack",
+            "value": "hit",
+            "sound": "hit",
+            "variants": 2,
+            "type": "sound"
+        },
+        {
+            "id": 29,
+            "event": "attack",
+            "value": "orc",
+            "sound": "orc_attack",
+            "variants": 2,
+            "type": "sound"
+        },
+        {
+            "id": 30,
+            "event": "attack",
+            "value": "bat",
+            "sound": "bat_attack",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 31,
+            "event": "attack",
+            "value": "archer",
+            "sound": "attack_bow",
+            "variants": 6,
+            "type": "sound"
+        },
+        {
+            "id": 32,
+            "event": "attack",
+            "value": "magic",
+            "sound": "wall_magic",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 33,
+            "event": "attack",
+            "value": "bomb",
+            "sound": "jetpack_attack",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 34,
+            "event": "attack",
+            "value": "shield_hit",
+            "sound": "shield_hit",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 35,
+            "event": "death",
+            "value": "small",
+            "sound": "death",
+            "variants": 8,
+            "type": "sound"
+        },
+        {
+            "id": 36,
+            "event": "death",
+            "value": "bat",
+            "sound": "bat_die",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 37,
+            "event": "death",
+            "value": "middle",
+            "sound": "death_mid",
+            "variants": 5,
+            "type": "sound"
+        },
+        {
+            "id": 38,
+            "event": "death",
+            "value": "large",
+            "sound": "death_large",
+            "variants": 2,
+            "type": "sound"
+        },
+        {
+            "id": 39,
+            "event": "death",
+            "value": "fire",
+            "sound": "death_fire",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 40,
+            "event": "death",
+            "value": "physical",
+            "sound": "death_smash",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 41,
+            "event": "special",
+            "value": "slide",
+            "sound": "move",
+            "variants": 2,
+            "type": "sound"
+        },
+        {
+            "id": 42,
+            "event": "special",
+            "value": "shield",
+            "sound": "orc_shield",
+            "variants": 4,
+            "type": "sound"
+        },
+        {
+            "id": 43,
+            "event": "special",
+            "value": "jetpack",
+            "sound": "jetpack",
+            "variants": 0,
+            "loop": 1,
+            "type": "sound"
+        },
+        {
+            "id": 44,
+            "event": "special",
+            "value": "kamikaze",
+            "sound": "kamikaze",
+            "variants": 3,
+            "type": "sound"
+        },
+        {
+            "id": 45,
+            "event": "special",
+            "value": "explosion",
+            "sound": "kamikaze_death",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 46,
+            "event": "special",
+            "value": "shaman_heal",
+            "sound": "shaman_heal",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 47,
+            "event": "special",
+            "value": "shaman_appears",
+            "sound": "shaman_in",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 48,
+            "event": "special",
+            "value": "shield_hit",
+            "sound": "shield_hit",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 49,
+            "event": "notify",
+            "value": "no_mana",
+            "sound": "mana_lack",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 50,
+            "event": "notify",
+            "value": "add_money",
+            "sound": "coins",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 51,
+            "event": "notify",
+            "value": "unlock",
+            "sound": "unlock",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 52,
+            "event": "notify",
+            "value": "upgrade",
+            "sound": "upgrade",
+            "variants": 0,
+            "type": "sound"
+        },
+        {
+            "id": 53,
+            "event": "notify",
+            "value": "drop",
+            "sound": "drop_pickup",
+            "variants": 0,
+            "type": "sound"
+        }
+    ]
+}

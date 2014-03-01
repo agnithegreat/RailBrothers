@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="game.png">
+	<!--
+	Created with ShoeBox
+	http://renderhjs.net/shoebox/
+	-->
+	<SubTexture name="back.png"	x="390"	y="281"	width="71"	height="640" frameX="-0" frameY="-0" frameWidth="71" frameHeight="640"/>
+	<SubTexture name="bone.png"	x="0"	y="873"	width="77"	height="64" frameX="-0" frameY="-0" frameWidth="77" frameHeight="64"/>
+	<SubTexture name="cactus1.png"	x="0"	y="939"	width="40"	height="69" frameX="-0" frameY="-0" frameWidth="40" frameHeight="69"/>
+	<SubTexture name="cactus2.png"	x="42"	y="939"	width="29"	height="44" frameX="-0" frameY="-0" frameWidth="29" frameHeight="44"/>
+	<SubTexture name="mountain1.png"	x="0"	y="281"	width="388"	height="122" frameX="-0" frameY="-0" frameWidth="388" frameHeight="122"/>
+	<SubTexture name="mountain2.png"	x="0"	y="786"	width="194"	height="44" frameX="-0" frameY="-0" frameWidth="194" frameHeight="44"/>
+	<SubTexture name="mountain3.png"	x="0"	y="832"	width="167"	height="39" frameX="-0" frameY="-0" frameWidth="167" frameHeight="39"/>
+	<SubTexture name="mountain4.png"	x="0"	y="405"	width="375"	height="83" frameX="-0" frameY="-0" frameWidth="375" frameHeight="83"/>
+	<SubTexture name="mountain5.png"	x="0"	y="144"	width="509"	height="135" frameX="-0" frameY="-0" frameWidth="509" frameHeight="135"/>
+	<SubTexture name="sand1.png"	x="0"	y="0"	width="1136"	height="76" frameX="-0" frameY="-0" frameWidth="1136" frameHeight="76"/>
+	<SubTexture name="sand2.png"	x="0"	y="78"	width="1135"	height="64" frameX="-0" frameY="-0" frameWidth="1135" frameHeight="64"/>
+	<SubTexture name="sand_bottom.png"	x="296"	y="490"	width="71"	height="280" frameX="-0" frameY="-0" frameWidth="71" frameHeight="280"/>
+	<SubTexture name="sand_top.png"	x="196"	y="786"	width="71"	height="198" frameX="-0" frameY="-0" frameWidth="71" frameHeight="198"/>
+	<SubTexture name="sun.png"	x="0"	y="490"	width="294"	height="294" frameX="-0" frameY="-0" frameWidth="294" frameHeight="294"/>
+</TextureAtlas>
