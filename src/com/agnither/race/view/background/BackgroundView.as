@@ -14,6 +14,9 @@ public class BackgroundView extends AbstractView {
 
     public static const SEA: String = "sea";
     public static const DESERT: String = "desert";
+    public static const MOUNTAIN: String = "mountain";
+    public static const SNOW: String = "snow";
+    public static const MOON: String = "moon";
 
     public static function getBackground(location: String):Class {
         switch (location) {
@@ -21,8 +24,18 @@ public class BackgroundView extends AbstractView {
                 return SeaBackgroundView;
             case DESERT:
                 return DesertBackgroundView;
+            case MOUNTAIN:
+                return MountainBackgroundView;
+            case SNOW:
+                return SnowBackgroundView;
+            case MOON:
+                return MoonBackgroundView;
         }
         return null;
+    }
+
+    public function get rail():int {
+        return 428;
     }
 
     protected var _game: Game;
@@ -50,7 +63,19 @@ public class BackgroundView extends AbstractView {
     }
 
     protected function handleTick(e: Event):void {
+    }
 
+    override public function destroy():void {
+        _game.removeEventListener(Game.TICK, handleTick);
+        _game = null;
+
+        while (_container.numChildren>0) {
+            _container.removeChildAt(0, true);
+        }
+        removeChild(_container, true);
+        _container = null;
+
+        super.destroy();
     }
 }
 }

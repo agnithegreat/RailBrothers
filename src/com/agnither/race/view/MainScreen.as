@@ -20,7 +20,16 @@ public class MainScreen extends Screen {
 
     public function showGame():void {
         _gameScreen = new GameScreen(_refs, _controller);
+        _gameScreen.touchable = false;
         addChild(_gameScreen);
+    }
+
+    public function destroyGame():void {
+        if (_gameScreen) {
+            _gameScreen.destroy();
+            removeChild(_gameScreen, true);
+            _gameScreen = null;
+        }
     }
 }
 }

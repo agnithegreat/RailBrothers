@@ -47,5 +47,19 @@ public class RailView extends AbstractView {
             _sleepers.addChild(sleeper);
         }
     }
+
+    override public function destroy():void {
+        _rail.destroy();
+        removeChild(_rail, true);
+        _rail = null;
+
+        while (_sleepers.numChildren>0) {
+            _sleepers.removeChildAt(0, true);
+        }
+        removeChild(_sleepers, true);
+        _sleepers = null;
+
+        super.destroy();
+    }
 }
 }

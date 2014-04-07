@@ -18,5 +18,11 @@ public class TiledImage extends Sprite {
             }
         }
     }
+
+    public function destroy():void {
+        while (numChildren>0) {
+            removeChildAt(0, true);
+        }
+    }
 }
 }

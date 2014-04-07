@@ -3,6 +3,7 @@
  */
 package com.agnither.race.ui {
 import com.agnither.race.model.Game;
+import com.agnither.race.ui.common.TiledImage;
 import com.agnither.ui.AbstractView;
 import com.agnither.utils.CommonRefs;
 
@@ -15,13 +16,13 @@ public class GamePanel extends AbstractView {
 
     private var _game: Game;
 
-    private var _back: Image;
+    private var _back: Sprite;
 
     private var _name1: Sprite;
     private var _name2: Sprite;
 
-    private var _line1: Image;
-    private var _line2: Image;
+    private var _line1: Sprite;
+    private var _line2: Sprite;
 
     private var _icon1: Image;
     private var _icon2: Image;
@@ -36,23 +37,23 @@ public class GamePanel extends AbstractView {
     override protected function initialize():void {
         _game.addEventListener(Game.TICK, handleTick);
 
-        _back = new Image(_refs.gui.getTexture("top_panel.png"));
+        _back = TiledImage.generateTiled(_refs.gui.getTexture("top_panel_left.png"), _refs.gui.getTexture("top_panel_centre.png"), _refs.gui.getTexture("top_panel_right.png"), stage.stageWidth-22);
         _back.x = 17;
         _back.y = 10;
         addChild(_back);
 
-        _line1 = new Image(_refs.gui.getTexture("line.png"));
+        _line1 = TiledImage.generateTiled(_refs.gui.getTexture("line_left.png"), _refs.gui.getTexture("line_centre.png"), _refs.gui.getTexture("line_right.png"), _back.width-222);
         _line1.x = 210;
         _line1.y = 32;
         addChild(_line1);
 
-        _line2 = new Image(_refs.gui.getTexture("line.png"));
+        _line2 = TiledImage.generateTiled(_refs.gui.getTexture("line_left.png"), _refs.gui.getTexture("line_centre.png"), _refs.gui.getTexture("line_right.png"), _back.width-222);
         _line2.x = 210;
         _line2.y = 83;
         addChild(_line2);
 
         _finish = new Image(_refs.gui.getTexture("finish.png"));
-        _finish.x = 1078;
+        _finish.x = stage.stageWidth-58;
         _finish.y = 15;
         addChild(_finish);
 

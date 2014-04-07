@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.agnither.race {
+import com.agnither.race.data.AreaVO;
 import com.agnither.race.data.HeroVO;
 import com.agnither.race.data.LevelVO;
 import com.agnither.utils.DeviceResInfo;
@@ -50,6 +51,7 @@ public class App extends Sprite {
         var config: Object = _resources.main.getObject("config");
 
         HeroVO.parseData(config.heroes);
+        AreaVO.parseData(config.areas);
         LevelVO.parseData(config.levels);
 //        SoundVO.parseData(config.sounds);
     }
@@ -58,7 +60,6 @@ public class App extends Sprite {
         _resources.removeEventListener(ResourcesManager.COMPLETE, handleInit);
 
         _controller.init();
-        _controller.start(1);
     }
 }
 }

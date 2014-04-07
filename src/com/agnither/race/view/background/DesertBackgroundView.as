@@ -18,8 +18,6 @@ public class DesertBackgroundView extends BackgroundView {
     private var _sandBottom: TiledImage;
     private var _sandTop: TiledImage;
 
-    private var _bone: Image;
-
     private var _sun: Image;
 
     public function DesertBackgroundView(refs:CommonRefs, game: Game) {
@@ -53,11 +51,6 @@ public class DesertBackgroundView extends BackgroundView {
         _sandTop.y = stage.stageHeight;
         addChild(_sandTop);
 
-        _bone = new Image(_refs.game.getTexture("bone.png"));
-        _bone.x = 356;
-        _bone.y = 558;
-        addChild(_bone);
-
         addToContainer("cactus1.png", 88, 333, _container);
         addToContainer("mountain1.png", 160, 254, _container);
         addToContainer("mountain2.png", 581, 306, _container);
@@ -74,7 +67,32 @@ public class DesertBackgroundView extends BackgroundView {
 
     override protected function handleTick(e: Event):void {
         _container.pivotX = _game.player.position/_game.length * stage.stageWidth/2;
-        _sun.x = 889-_game.player.position/_game.length*440;
+        _sun.x = 889-_game.player.position/_game.length*220;
+    }
+
+    override public function destroy():void {
+        _back.destroy();
+        removeChild(_back);
+        _back = null;
+
+        _sandBottom.destroy();
+        removeChild(_sandBottom);
+        _sandBottom = null;
+
+        _sandTop.destroy();
+        removeChild(_sandTop);
+        _sandTop = null;
+
+        removeChild(_sun, true);
+        _sun = null;
+
+        removeChild(_sand1, true);
+        _sand1 = null;
+
+        removeChild(_sand2, true);
+        _sand2 = null;
+
+        super.destroy();
     }
 }
 }

@@ -99,5 +99,36 @@ public class SeaBackgroundView extends BackgroundView {
             _clouds.addChild(cloud);
         }
     }
+
+    override public function destroy():void {
+        _back.destroy();
+        removeChild(_back);
+        _back = null;
+
+        _sea.destroy();
+        removeChild(_sea);
+        _sea = null;
+
+        _sand.destroy();
+        removeChild(_sand);
+        _sand = null;
+
+        while (_clouds.numChildren>0) {
+            _clouds.removeChildAt(0, true);
+        }
+        removeChild(_clouds, true);
+        _clouds = null;
+
+        while (_spots.numChildren>0) {
+            _spots.removeChildAt(0, true);
+        }
+        removeChild(_spots, true);
+        _spots = null;
+
+        removeChild(_ship, true);
+        _ship = null;
+
+        super.destroy();
+    }
 }
 }

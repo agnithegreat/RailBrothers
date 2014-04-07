@@ -15,6 +15,11 @@ public class AbstractView extends Sprite {
 
     protected var _refs: CommonRefs;
 
+    protected var _data: Object;
+    public function set data(value:Object):void {
+        _data = value;
+    }
+
     public function AbstractView(refs: CommonRefs) {
         _refs = refs;
 
@@ -26,10 +31,10 @@ public class AbstractView extends Sprite {
     protected function initialize():void {
     }
 
-    protected function open():void {
+    public function open():void {
     }
 
-    protected function close():void {
+    public function close():void {
     }
 
     private function handleAddedToStage(event: Event):void {

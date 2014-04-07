@@ -57,5 +57,24 @@ public class TrolleyView extends AbstractView {
 
         _steer.rotation = _trolley.balance * Math.PI/6 - Math.PI * 0.093;
     }
+
+    override public function destroy():void {
+        _trolley.removeEventListener(Trolley.UPDATE, handleUpdate);
+        _trolley = null;
+
+        removeChild(_steer, true);
+        _steer = null;
+
+        removeChild(_base, true);
+        _base = null;
+
+        removeChild(_wheel1, true);
+        _wheel1 = null;
+
+        removeChild(_wheel2, true);
+        _wheel2 = null;
+
+        super.destroy();
+    }
 }
 }

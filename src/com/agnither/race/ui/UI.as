@@ -3,6 +3,12 @@
  */
 package com.agnither.race.ui {
 import com.agnither.race.GameController;
+import com.agnither.race.ui.popups.DefeatPopup;
+import com.agnither.race.ui.popups.PausePopup;
+import com.agnither.race.ui.popups.VictoryPopup;
+import com.agnither.race.ui.screens.area.AreaSelectScreen;
+import com.agnither.race.ui.screens.level.LevelSelectScreen;
+import com.agnither.race.ui.screens.shop.ShopScreen;
 import com.agnither.ui.Popup;
 import com.agnither.ui.Screen;
 import com.agnither.utils.CommonRefs;
@@ -31,9 +37,16 @@ public class UI extends Screen {
     }
 
     override protected function initialize():void {
+        SCREENS[AreaSelectScreen.ID] = new AreaSelectScreen(_refs, _controller);
+        SCREENS[LevelSelectScreen.ID] = new LevelSelectScreen(_refs, _controller);
+        SCREENS[ShopScreen.ID] = new ShopScreen(_refs, _controller);
         SCREENS[GameScreen.ID] = new GameScreen(_refs, _controller.game);
 
-        _darkness = new Quad(stage.stageWidth, stage.stageHeight, 0);
+        POPUPS[PausePopup.ID] = new PausePopup(_refs);
+        POPUPS[DefeatPopup.ID] = new DefeatPopup(_refs);
+        POPUPS[VictoryPopup.ID] = new VictoryPopup(_refs);
+
+        _darkness = new Quad(stage.stageWidth, stage.stageHeight, 0, false);
         _darkness.alpha = 0.5;
     }
 
@@ -47,14 +60,14 @@ public class UI extends Screen {
             addChild(_currentScreen);
         }
     }
-    private function hideScreen():void {
+    public function hideScreen():void {
         if (_currentScreen) {
             removeChild(_currentScreen);
             _currentScreen = null;
         }
     }
 
-    public function showPopup(id: String):void {
+    public function showPopup(id: String, data: Object = null):void {
         if (_currentPopup == POPUPS[id]) {
             return;
         }
@@ -63,14 +76,15 @@ public class UI extends Screen {
 
         _currentPopup = POPUPS[id];
         if (_currentPopup) {
+            _currentPopup.data = data;
             if (_currentPopup.darkened) {
-                addChildAt(_darkness, 0);
+                addChild(_darkness);
             }
             _currentPopup.addEventListener(Popup.CLOSE, hidePopup);
             addChild(_currentPopup);
         }
     }
-    private function hidePopup(e: Event = null):void {
+    public function hidePopup(e: Event = null):void {
         if (_currentPopup) {
             if (_currentPopup.darkened) {
                 removeChild(_darkness);
@@ -81,15 +95,7 @@ public class UI extends Screen {
         }
     }
 
-    private function handleShowScreen(e: Event):void {
-        showScreen(e.data as String);
-    }
-
-    private function handleShowPopup(e: Event):void {
-        showPopup(e.data as String);
-    }
-
-    private function handleClearScreen(e: Event):void {
+    public function clearScreen():void {
         hideScreen();
         hidePopup();
     }

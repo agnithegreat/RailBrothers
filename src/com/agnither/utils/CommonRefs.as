@@ -15,6 +15,10 @@ public class CommonRefs {
         return _resources;
     }
 
+    public function get main():AssetManager {
+        return _resources.main;
+    }
+
     public function get gui():AssetManager {
         return _resources.gui;
     }

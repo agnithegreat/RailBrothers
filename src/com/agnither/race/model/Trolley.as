@@ -9,7 +9,7 @@ public class Trolley extends EventDispatcher {
     public static const UPDATE: String = "update_Trolley";
 
     private static var acceleraion: int = 100;
-    private static var deceleration: Number = 0.05;
+    private static var deceleration: Number = 0.5;
     private static var maxSpeed: int = 2000;
 
     private var _acceleration: Number;
@@ -61,12 +61,12 @@ public class Trolley extends EventDispatcher {
             _balance = Math.max(-1, Math.min(_balance, 1));
 
             _acceleration += acceleraion * power;
+            _speed += _acceleration * delta;
         } else {
             _locked = _target;
             _acceleration = 0;
+            _speed *= 1 - deceleration * delta;
         }
-        _speed += _acceleration * delta;
-        _speed *= 1 - deceleration * delta;
         _speed = Math.max(0, Math.min(_speed, maxSpeed));
 
         _position += _range * _speed * delta;

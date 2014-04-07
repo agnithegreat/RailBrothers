@@ -37,7 +37,8 @@ public class ResourcesManager extends EventDispatcher {
 
     public function loadMain():void {
         _main.enqueue(
-                "config/config.json"
+                "config/config.json",
+                "particles/snow.pex"
         );
         _main.loadQueue(handleProgress);
     }

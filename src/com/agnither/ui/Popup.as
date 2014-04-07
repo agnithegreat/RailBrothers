@@ -23,7 +23,7 @@ public class Popup extends AbstractView {
         super(refs);
     }
 
-    override protected function open():void {
+    override public function open():void {
         dispatchEventWith(OPEN);
     }
 

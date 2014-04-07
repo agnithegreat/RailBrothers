@@ -11,6 +11,7 @@ public class Game extends EventDispatcher {
 
     public static const INIT: String = "init_Game";
     public static const TICK: String = "tick_Game";
+    public static const FINISHED: String = "finished_Game";
 
     private var _level: LevelVO;
     private var _hero: HeroVO;
@@ -26,15 +27,15 @@ public class Game extends EventDispatcher {
     }
 
     public function get location():String {
-        return _level.location;
+        return _level.area.name;
     }
 
     public function get difficulty():Number {
         var base: int = _level.difficulty;
-        if (_level.hero > _hero.id-1) {
-            return 1.1;
+        if (_level.area.hero > _hero.id-1) {
+            return HeroVO.getHero(_level.area.hero).speed/100;
         }
-        return base/100 * _hero.difficulty/100;
+        return base/100;
     }
 
     public function get length():int {
@@ -51,6 +52,11 @@ public class Game extends EventDispatcher {
 
     private var _finished: Boolean;
 
+    private var _win: Boolean;
+    public function get win():Boolean {
+        return _win;
+    }
+
     public function Game() {
         _player = new Trolley();
         _enemy = new Trolley();
@@ -62,28 +68,32 @@ public class Game extends EventDispatcher {
     }
 
     public function init():void {
-        _player.init(1);
+        _player.init(_hero.speed/100);
 
         _enemy.init(difficulty);
         _enemy.press(-1);
+
+        _finished = false;
+        _win = false;
 
         dispatchEventWith(INIT);
     }
 
     public function step(delta: Number):void {
-        if (!_finished && playerProgress==1) {
-            press(0);
+        if (!_finished && (playerProgress==1 || enemyProgress==1)) {
+            _player.press(0);
+            _enemy.press(0);
             _finished = true;
+            _win = enemyProgress < playerProgress;
+            dispatchEventWith(FINISHED);
         }
 
-        if (_enemy.locked) {
+        if (!_finished && _enemy.locked) {
             _enemy.press(-_enemy.locked);
         }
 
         _player.step(delta);
         _enemy.step(delta);
-
-//        trace(_player.pushes, _enemy.pushes, _player.position / _enemy.position);
 
         dispatchEventWith(TICK);
     }
@@ -92,6 +102,11 @@ public class Game extends EventDispatcher {
         if (!_finished) {
             _player.press(direction);
         }
+    }
+
+    public function destroy():void {
+        _level = null;
+        _hero = null;
     }
 }
 }
