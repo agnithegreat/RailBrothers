@@ -2,15 +2,24 @@
  * Created by agnither on 28.02.14.
  */
 package com.agnither.race.model {
+import com.agnither.race.data.HeroVO;
+
 import starling.events.EventDispatcher;
 
 public class Trolley extends EventDispatcher {
 
     public static const UPDATE: String = "update_Trolley";
+    public static const WIN: String = "win_Trolley";
+    public static const LOSE: String = "lose_Trolley";
 
     private static var acceleraion: int = 100;
     private static var deceleration: Number = 0.5;
-    private static var maxSpeed: int = 2000;
+    private static var maxSpeed: int = 1000;
+
+    private var _hero: HeroVO;
+    public function get hero():HeroVO {
+        return _hero;
+    }
 
     private var _acceleration: Number;
     private var _speed: Number;
@@ -39,10 +48,17 @@ public class Trolley extends EventDispatcher {
         return _pushes;
     }
 
+    private var _end: Boolean;
+    public function get end():Boolean {
+        return _end;
+    }
+
     public function Trolley() {
     }
 
-    public function init(range: Number):void {
+    public function init(hero: HeroVO, range: Number):void {
+        _hero = hero;
+
         _speed = 0;
         _acceleration = 0;
         _position = 0;
@@ -51,10 +67,11 @@ public class Trolley extends EventDispatcher {
         _range = range;
         _locked = 0;
         _pushes = 0;
+        _end = false;
     }
 
     public function step(delta: Number):void {
-        var power: Number = Math.min((0.5+3.5*_speed/maxSpeed) * Math.abs(_balanceDelta * delta), Math.abs(_balance-_target));
+        var power: Number = Math.min((0.5+2.5*_speed/maxSpeed) * Math.abs(_balanceDelta * delta), Math.abs(_balance-_target));
         if (power) {
             _locked = 0;
             _balance += _balanceDelta>0 ? power : -power;
@@ -80,6 +97,11 @@ public class Trolley extends EventDispatcher {
         _balanceDelta = direction;
         _target = direction;
         _acceleration = 0;
+    }
+
+    public function endGame(win: Boolean):void {
+        _end = true;
+        dispatchEventWith(win ? WIN : LOSE);
     }
 }
 }

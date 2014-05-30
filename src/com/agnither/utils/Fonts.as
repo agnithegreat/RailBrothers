@@ -11,6 +11,8 @@ public class Fonts {
         "area_cost",
         "area_coins",
         "coins",
+        "money",
+        "shop_text",
         "popup_title",
         "popup_title_stroke",
         "popup_title_big",

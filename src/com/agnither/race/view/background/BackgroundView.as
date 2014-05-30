@@ -16,6 +16,8 @@ public class BackgroundView extends AbstractView {
     public static const DESERT: String = "desert";
     public static const MOUNTAIN: String = "mountain";
     public static const SNOW: String = "snow";
+    public static const FOREST: String = "forest";
+    public static const JUNGLE: String = "jungle";
     public static const MOON: String = "moon";
 
     public static function getBackground(location: String):Class {
@@ -28,6 +30,10 @@ public class BackgroundView extends AbstractView {
                 return MountainBackgroundView;
             case SNOW:
                 return SnowBackgroundView;
+            case FOREST:
+                return ForestBackgroundView;
+            case JUNGLE:
+                return JungleBackgroundView;
             case MOON:
                 return MoonBackgroundView;
         }

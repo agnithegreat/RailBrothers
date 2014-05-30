@@ -43,20 +43,20 @@ public class GameScreen extends Screen {
 
         _buttonLeft = new Button(_refs.gui.getTexture("button_up.png"), "", _refs.gui.getTexture("button_down.png"));
         _buttonLeft.addEventListener(TouchEvent.TOUCH, handleTouch);
-        _buttonLeft.x = 80;
+        _buttonLeft.x = 30;
         _buttonLeft.y = 500;
         addChild(_buttonLeft);
 
         _buttonRight = new Button(_refs.gui.getTexture("button_up.png"), "", _refs.gui.getTexture("button_down.png"));
         _buttonRight.addEventListener(TouchEvent.TOUCH, handleTouch);
-        _buttonRight.x = 850;
+        _buttonRight.x = stage.stageWidth-236;
         _buttonRight.y = 500;
         addChild(_buttonRight);
 
         _indication = new IndicationView(_refs);
-        _indication.x = 369;
         _indication.y = 553;
         addChild(_indication);
+        _indication.x = (stage.stageWidth-_indication.width)/2;
 
         _pauseBtn = new Button(_refs.gui.getTexture("pause_btn.png"));
         _pauseBtn.addEventListener(Event.TRIGGERED, handlePause);

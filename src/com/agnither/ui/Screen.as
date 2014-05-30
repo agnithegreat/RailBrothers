@@ -19,5 +19,11 @@ public class Screen extends AbstractView {
     public function Screen(refs: CommonRefs) {
         super(refs);
     }
+
+    override public function close():void {
+        super.close();
+
+        removeFromParent();
+    }
 }
 }

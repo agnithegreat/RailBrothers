@@ -66,14 +66,14 @@ public class MouseGesture extends EventDispatcher {
         mouseZone.removeEventListener(TouchEvent.TOUCH, handleTouch);
     }
 
-    public function step():void {
+    public function step(delta: Number):void {
         if (!paths) {
             return;
         }
 
         for (var i:int = 0; i < paths.length; i++) {
             if (paths[i]) {
-                paths[i].capture();
+                paths[i].capture(delta);
             }
         }
 
@@ -135,7 +135,7 @@ public class MouseGesture extends EventDispatcher {
             }
         }
 
-        return bestGesture ? new GestureResult(bestGesture.name, path.points) : null;
+        return bestGesture ? new GestureResult(bestGesture.name, path.points, path.time) : null;
     }
 
     protected function difAngle(a:uint,b:uint):uint{

@@ -3,13 +3,13 @@
  */
 package com.agnither.race.ui.popups {
 import com.agnither.race.GameController;
-import com.agnither.race.data.LevelVO;
+import com.agnither.race.ui.common.TiledImage;
 import com.agnither.ui.Popup;
 import com.agnither.utils.CommonRefs;
 
 import starling.display.Button;
-
 import starling.display.Image;
+import starling.display.Sprite;
 import starling.events.Event;
 import starling.text.TextField;
 
@@ -22,7 +22,8 @@ public class VictoryPopup extends Popup {
     private var _titleStroke: TextField;
     private var _title: TextField;
 
-    private var _coinsBack: Image;
+    private var _coinsBack: Sprite;
+    private var _coin: Image;
     private var _coins: TextField;
 
     private var _menuBtn: Button;
@@ -37,10 +38,15 @@ public class VictoryPopup extends Popup {
         _back = new Image(_refs.gui.getTexture("pause_back.png"));
         addChild(_back);
 
-        _coinsBack = new Image(_refs.gui.getTexture("coins_back.png"));
+        _coinsBack = TiledImage.generateTiled(_refs.gui.getTexture("money_back_left.png"), _refs.gui.getTexture("money_back_centre.png"), _refs.gui.getTexture("money_back_right.png"), 252);
         _coinsBack.x = 136;
         _coinsBack.y = 122;
         addChild(_coinsBack);
+
+        _coin = new Image(_refs.gui.getTexture("coin.png"));
+        _coin.x = 6;
+        _coin.y = 6;
+        _coinsBack.addChild(_coin);
 
         _menuBtn = new Button(_refs.gui.getTexture("menu_button.png"));
         _menuBtn.addEventListener(Event.TRIGGERED, handleTriggered);
@@ -62,7 +68,7 @@ public class VictoryPopup extends Popup {
 
         _titleStroke = new TextField(_back.width, 100, "YOU WIN!", "popup_title_stroke", -1, 0xFFFFFF);
         _titleStroke.x = int((_back.width-_titleStroke.width)/2)-7;
-        _titleStroke.y = 17;
+        _titleStroke.y = 15;
         addChild(_titleStroke);
 
         _title = new TextField(_back.width, 100, "YOU WIN!", "popup_title", -1, 0xFFFFFF);

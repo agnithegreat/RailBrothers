@@ -2,6 +2,7 @@
  * Created by agnither on 27.02.14.
  */
 package com.agnither.race.model {
+import com.agnither.race.data.ClothVO;
 import com.agnither.race.data.HeroVO;
 import com.agnither.race.data.LevelVO;
 
@@ -15,6 +16,7 @@ public class Game extends EventDispatcher {
 
     private var _level: LevelVO;
     private var _hero: HeroVO;
+    private var _cloth: ClothVO;
 
     private var _player: Trolley;
     public function get player():Trolley {
@@ -33,13 +35,13 @@ public class Game extends EventDispatcher {
     public function get difficulty():Number {
         var base: int = _level.difficulty;
         if (_level.area.hero > _hero.id-1) {
-            return HeroVO.getHero(_level.area.hero).speed/100;
+            return (100+HeroVO.getHero(_level.area.hero).speedup)/100;
         }
         return base/100;
     }
 
     public function get length():int {
-        return _level.length;
+        return _level.length/3;
     }
 
     public function get playerProgress():Number {
@@ -52,6 +54,10 @@ public class Game extends EventDispatcher {
 
     private var _finished: Boolean;
 
+    public function get isRunning():Boolean {
+        return !_finished;
+    }
+
     private var _win: Boolean;
     public function get win():Boolean {
         return _win;
@@ -62,15 +68,17 @@ public class Game extends EventDispatcher {
         _enemy = new Trolley();
     }
 
-    public function prepare(id: int, hero: int):void {
+    public function prepare(id: int, hero: int, cloth: int):void {
         _level = LevelVO.getLevel(id);
         _hero = HeroVO.getHero(hero);
+        _cloth = ClothVO.getCloth(cloth);
     }
 
     public function init():void {
-        _player.init(_hero.speed/100);
+        var speedup: Number = _cloth ? _hero.speedup+_cloth.speedup : _hero.speedup;
+        _player.init(_hero, (100+speedup)/100);
 
-        _enemy.init(difficulty);
+        _enemy.init(null, difficulty);
         _enemy.press(-1);
 
         _finished = false;
@@ -85,6 +93,7 @@ public class Game extends EventDispatcher {
             _enemy.press(0);
             _finished = true;
             _win = enemyProgress < playerProgress;
+            _player.endGame(_win);
             dispatchEventWith(FINISHED);
         }
 

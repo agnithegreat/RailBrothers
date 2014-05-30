@@ -27,13 +27,12 @@ public class Main extends Sprite {
         Starling.multitouchEnabled = true;
         Starling.handleLostContext = !ios;
 
-        var artSize: Rectangle = new Rectangle(0, 0, 1136, 640);
         viewPort = ios ? new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight) : new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
 
         _starling = new Starling(App, stage, viewPort);
         _starling.antiAliasing = 0;
-        _starling.stage.stageWidth = artSize.width;
-        _starling.stage.stageHeight = artSize.height;
+        _starling.stage.stageWidth = viewPort.width;
+        _starling.stage.stageHeight = viewPort.height;
         _starling.showStats = true;
         _starling.simulateMultitouch = false;
         _starling.enableErrorChecking = Capabilities.isDebugger;
@@ -46,6 +45,7 @@ public class Main extends Sprite {
 
         NativeApplication.nativeApplication.addEventListener(
             Event.DEACTIVATE, function (e:*):void {
+                Starling.current.stage.dispatchEventWith("quit");
             }
         );
     }

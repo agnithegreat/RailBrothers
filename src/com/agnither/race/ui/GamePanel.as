@@ -83,8 +83,8 @@ public class GamePanel extends AbstractView {
     }
 
     private function handleTick(e: Event):void {
-        _icon1.x = 210 + _game.playerProgress * _line1.width;
-        _icon2.x = 210 + _game.enemyProgress * _line2.width;
+        _icon1.x = 210 + _game.playerProgress * (_line1.width-10);
+        _icon2.x = 210 + _game.enemyProgress * (_line2.width-10);
     }
 }
 }

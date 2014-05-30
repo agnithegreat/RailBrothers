@@ -27,6 +27,12 @@ public class Popup extends AbstractView {
         dispatchEventWith(OPEN);
     }
 
+    override public function close():void {
+        super.close();
+
+        removeFromParent();
+    }
+
     override public function destroy():void {
         super.destroy();
     }

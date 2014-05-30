@@ -2,12 +2,16 @@
  * Created by agnither on 22.03.14.
  */
 package com.agnither.race.ui.common {
+import com.agnither.race.GameController;
 import com.agnither.race.model.Player;
 import com.agnither.ui.AbstractView;
 import com.agnither.utils.CommonRefs;
 
 import starling.display.Image;
 import starling.events.EnterFrameEvent;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
 
 public class EnergyDisplayView extends AbstractView {
 
@@ -42,8 +46,10 @@ public class EnergyDisplayView extends AbstractView {
 
         setBullet(_bullets[0], false);
 
-        x = 1047;
+        x = stage.stageWidth-89;
         y = 70;
+
+        addEventListener(TouchEvent.TOUCH, handleTouch);
     }
 
     override public function open():void {
@@ -70,6 +76,13 @@ public class EnergyDisplayView extends AbstractView {
 
     private function setBullet(bullet: Image, full: Boolean):void {
         bullet.texture = full ? _refs.gui.getTexture("bullet.png") : _refs.gui.getTexture("bullet_empty.png");
+    }
+
+    private function handleTouch(e: TouchEvent):void {
+        var touch: Touch = e.getTouch(this, TouchPhase.ENDED);
+        if (touch) {
+            dispatchEventWith(GameController.UI_ACTION, true, GameController.SHOW_ENERGY);
+        }
     }
 
     private function handleEnterFrame(e: EnterFrameEvent):void {

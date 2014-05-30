@@ -9,6 +9,7 @@ import com.agnither.utils.FormatUtil;
 
 import starling.display.Button;
 import starling.display.Sprite;
+import starling.events.Event;
 import starling.text.TextField;
 import starling.textures.Texture;
 
@@ -41,32 +42,40 @@ public class AreaTile extends AbstractView {
             addChild(_icon);
         }
 
-        if (!_area.opened) {
-            _lock = new Button(_refs.gui.getTexture("button_lock.png"));
-            _lock.scaleWhenDown = 1;
-            _lock.pivotX = _lock.width/2;
-            _lock.pivotY = _lock.height/2;
-            _lock.scaleX = 1.22;
-            _lock.scaleY = 1.22;
-            addChild(_lock);
+        _lock = new Button(_refs.gui.getTexture("button_lock.png"));
+        _lock.scaleWhenDown = 1;
+        _lock.pivotX = _lock.width/2;
+        _lock.pivotY = _lock.height/2;
+        _lock.scaleX = 1.22;
+        _lock.scaleY = 1.22;
+        addChild(_lock);
 
-            _unlockCost = TextField.getBitmapFont("area_cost").createSprite(_lock.width, 70, FormatUtil.formatMoney(_area.unlockcost));
-            _unlockCost.touchable = false;
-            _unlockCost.pivotX = _lock.width/2;
-            _unlockCost.y = 20;
-            addChild(_unlockCost);
+        _unlockCost = TextField.getBitmapFont("area_cost").createSprite(_lock.width, 70, FormatUtil.formatMoney(_area.unlockcost));
+        _unlockCost.touchable = false;
+        _unlockCost.pivotX = _lock.width/2;
+        _unlockCost.y = 20;
+        addChild(_unlockCost);
 
-            _unlockCoins = TextField.getBitmapFont("area_coins").createSprite(_lock.width, 60, "COINS");
-            _unlockCoins.touchable = false;
-            _unlockCoins.pivotX = _lock.width/2;
-            _unlockCoins.y = 70;
-            addChild(_unlockCoins);
-        }
+        _unlockCoins = TextField.getBitmapFont("area_coins").createSprite(_lock.width, 60, "COINS");
+        _unlockCoins.touchable = false;
+        _unlockCoins.pivotX = _lock.width/2;
+        _unlockCoins.y = 70;
+        addChild(_unlockCoins);
+
+        _area.addEventListener(AreaVO.UPDATE, handleUpdate);
+        handleUpdate(null);
+    }
+
+    private function handleUpdate(e: Event):void {
+        _lock.visible = !_area.opened;
+        _unlockCost.visible = !_area.opened;
+        _unlockCoins.visible = !_area.opened;
     }
 
     override public function destroy():void {
         super.destroy();
 
+        _area.removeEventListener(AreaVO.UPDATE, handleUpdate);
         _area = null;
 
         if (_icon) {

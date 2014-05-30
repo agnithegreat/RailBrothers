@@ -4,14 +4,16 @@
 package com.agnither.race.ui.screens.level {
 import com.agnither.race.GameController;
 import com.agnither.race.data.LevelVO;
+import com.agnither.race.model.Player;
 import com.agnither.race.ui.common.EnergyDisplayView;
+import com.agnither.race.ui.common.StrokeTextField;
+import com.agnither.race.ui.common.TiledImage;
 import com.agnither.ui.Screen;
 import com.agnither.utils.CommonRefs;
 import com.agnither.utils.FormatUtil;
 import com.gesture.GestureEvent;
 import com.gesture.MouseGesture;
 
-import flash.geom.Point;
 import flash.geom.Rectangle;
 
 import starling.animation.Transitions;
@@ -38,11 +40,11 @@ public class LevelSelectScreen extends Screen {
 
     private var _energy: EnergyDisplayView;
 
-    private var _coinsBack: Image;
+    private var _coinsBack: Sprite;
+    private var _coin: Image;
     private var _coins: TextField;
 
-    private var _titleStroke: TextField;
-    private var _title: TextField;
+    private var _title: StrokeTextField;
 
     private var _levels: Vector.<LevelTile>;
     private var _container: Sprite;
@@ -67,10 +69,15 @@ public class LevelSelectScreen extends Screen {
         _energy = new EnergyDisplayView(_refs, _controller.player);
         addChild(_energy);
 
-        _coinsBack = new Image(_refs.gui.getTexture("coins_back.png"));
-        _coinsBack.x = 707;
-        _coinsBack.y = 20;
+        _coinsBack = TiledImage.generateTiled(_refs.gui.getTexture("money_back_left.png"), _refs.gui.getTexture("money_back_centre.png"), _refs.gui.getTexture("money_back_right.png"), 266);
+        _coinsBack.x = int((stage.stageWidth-_coinsBack.width)/2);
+        _coinsBack.y = 560;
         addChild(_coinsBack);
+
+        _coin = new Image(_refs.gui.getTexture("coin.png"));
+        _coin.x = 6;
+        _coin.y = 6;
+        _coinsBack.addChild(_coin);
 
         _container = new Sprite();
         addChild(_container);
@@ -79,34 +86,33 @@ public class LevelSelectScreen extends Screen {
 
         _backBtn = new Button(_refs.gui.getTexture("back_button.png"));
         _backBtn.addEventListener(Event.TRIGGERED, handleClick);
-        _backBtn.x = 42;
-        _backBtn.y = 26;
+        _backBtn.x = 16;
+        _backBtn.y = 16;
         addChild(_backBtn);
 
         _shopBtn = new Button(_refs.gui.getTexture("shop_button.png"));
         _shopBtn.addEventListener(Event.TRIGGERED, handleClick);
-        _shopBtn.x = 909;
+        _shopBtn.x = stage.stageWidth-217;
         _shopBtn.y = 539;
         addChild(_shopBtn);
 
-        _titleStroke = new TextField(400, 100, "", "area_name_stroke", -1, 0xFFFFFF);
-        _titleStroke.x = (stage.stageWidth-_titleStroke.width)/2-7;
-        _titleStroke.y = 27;
-        addChild(_titleStroke);
-
-        _title = new TextField(400, 100, "", "area_name", -1, 0xFFFFFF);
+        _title = new StrokeTextField(400, 100, "");
         _title.x = (stage.stageWidth-_title.width)/2;
         _title.y = 20;
         addChild(_title);
 
-        _coins = new TextField(171, 52, "", "coins", -1, 0xFFFFFF);
-        _coins.x = 779;
-        _coins.y = 31;
+        _coins = new TextField(200, 52, "", "coins", -1, 0xFFFFFF);
+        _coins.x = _coinsBack.x + 57;
+        _coins.y = 571;
         addChild(_coins);
 
-        _gesture = new MouseGesture(this);
+        _gesture = new MouseGesture(stage);
         _gesture.addGesture("left", "4");
         _gesture.addGesture("right", "0");
+    }
+
+    private function handleUpdate(e: Event):void {
+        _coins.text = FormatUtil.formatMoney(_controller.player.money);
     }
 
     override public function open():void {
@@ -116,7 +122,8 @@ public class LevelSelectScreen extends Screen {
         addLevels(LevelVO.getArea(_controller.currentArea));
         update(_current, false);
 
-        _coins.text = FormatUtil.formatMoney(_controller.player.money);
+        _controller.player.addEventListener(Player.UPDATE, handleUpdate);
+        handleUpdate(null);
 
         _gesture.addEventListener(GestureEvent.GESTURE_MATCH, handleGesture);
         stage.addEventListener(EnterFrameEvent.ENTER_FRAME, handleEnterFrame);
@@ -128,9 +135,11 @@ public class LevelSelectScreen extends Screen {
         stage.removeEventListener(EnterFrameEvent.ENTER_FRAME, handleEnterFrame);
         _gesture.removeEventListener(GestureEvent.GESTURE_MATCH, handleGesture);
 
-        super.close();
+        _controller.player.removeEventListener(Player.UPDATE, handleUpdate);
 
         clear();
+
+        super.close();
     }
 
     private function addLevels(levels: Vector.<LevelVO>):void {
@@ -148,19 +157,18 @@ public class LevelSelectScreen extends Screen {
     }
 
     private function update(current: int, animated: Boolean = true):void {
-        _current = current;
+        _current = Math.max(0, Math.min(current, _levels.length-1));
 
         var l: int = _levels.length;
         for (var i:int = 0; i < l; i++) {
             var level: LevelTile = _levels[i];
-            var nx: int = 568 - tile * (_current-i);
+            var nx: int = stage.stageWidth/2 - tile * (_current-i);
             var ny: int = 327;
             var scale: Number = i==_current ? 1 : buttonScale;
             Starling.juggler.tween(level, animated ? 0.5 : 0, {x: nx, y: ny, scaleX: scale, scaleY: scale, transition: Transitions.EASE_OUT});
         }
 
-        _titleStroke.text = "LEVEL " + _levels[current].level.id;
-        _title.text = "LEVEL " + _levels[current].level.id;
+        _title.text = "LEVEL " + (_current+1);
     }
 
     private function clear():void {
@@ -172,6 +180,10 @@ public class LevelSelectScreen extends Screen {
     }
 
     private function handleEnterFrame(e: EnterFrameEvent):void {
+        if (!stage) {
+            return;
+        }
+
         var l: int = _levels.length;
         for (var i:int = 0; i < l; i++) {
             var level: LevelTile = _levels[i];
@@ -179,26 +191,21 @@ public class LevelSelectScreen extends Screen {
             level.visible = (bounds.x <= stage.stageWidth) && (bounds.x + bounds.width >= 0);
         }
 
-        _gesture.step();
+        _gesture.step(e.passedTime);
     }
 
     private function handleGesture(e: GestureEvent):void {
-        var first: Point = e.result.points[0];
-        var last: Point = e.result.points[e.result.points.length-1];
-        if (Point.distance(first, last) < 100) {
+        if (e.result.distance < 50) {
             return;
         }
 
+        var speed: int = e.result.speed/1000;
         switch (e.result.name) {
             case "left":
-                if (_current+1 < _levels.length) {
-                    update(_current+1);
-                }
+                update(_current+speed);
                 break;
             case "right":
-                if (_current > 0) {
-                    update(_current-1);
-                }
+                update(_current-speed);
                 break;
         }
     }
@@ -207,9 +214,16 @@ public class LevelSelectScreen extends Screen {
         var level: LevelTile = e.currentTarget as LevelTile;
         var id: int = (level.level.id-1) % 5;
         if (id == _current) {
-            dispatchEventWith(SELECT_LEVEL, true, level.level);
+            Starling.juggler.delayCall(checkSelect, 0.1, level.level);
         } else {
             update(id);
+        }
+    }
+
+    private function checkSelect(level: LevelVO):void {
+        var id: int = (level.id-1) % 5;
+        if (id == _current) {
+            dispatchEventWith(SELECT_LEVEL, true, level);
         }
     }
 

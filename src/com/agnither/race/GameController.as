@@ -3,21 +3,34 @@
  */
 package com.agnither.race {
 import com.agnither.race.data.AreaVO;
+import com.agnither.race.data.BankVO;
+import com.agnither.race.data.ClothVO;
 import com.agnither.race.data.HeroVO;
 import com.agnither.race.data.LevelVO;
+import com.agnither.race.managers.Services;
 import com.agnither.race.model.Game;
 import com.agnither.race.model.Player;
 import com.agnither.race.ui.GameScreen;
 import com.agnither.race.ui.UI;
+import com.agnither.race.ui.popups.BuyPopup;
 import com.agnither.race.ui.popups.DefeatPopup;
+import com.agnither.race.ui.popups.LocationUnlockedPopup;
+import com.agnither.race.ui.popups.NotEnoughPopup;
 import com.agnither.race.ui.popups.PausePopup;
+import com.agnither.race.ui.popups.RestorePopup;
 import com.agnither.race.ui.popups.VictoryPopup;
 import com.agnither.race.ui.screens.area.AreaSelectScreen;
 import com.agnither.race.ui.screens.level.LevelSelectScreen;
+import com.agnither.race.ui.screens.menu.MenuScreen;
+import com.agnither.race.ui.screens.shop.ClothTile;
+import com.agnither.race.ui.screens.shop.CoinsTile;
+import com.agnither.race.ui.screens.shop.HeroTile;
 import com.agnither.race.ui.screens.shop.ShopScreen;
 import com.agnither.race.view.MainScreen;
 import com.agnither.utils.CommonRefs;
 import com.agnither.utils.ResourcesManager;
+
+import dragonBones.animation.WorldClock;
 
 import flash.ui.Keyboard;
 
@@ -30,6 +43,10 @@ import starling.events.KeyboardEvent;
 public class GameController extends EventDispatcher {
 
     public static const UI_ACTION: String = "ui_action_GameController";
+    public static const ONLINE_GAME: String = "online";
+    public static const LOCAL_GAME: String = "local";
+    public static const ABOUT: String = "about";
+    public static const GAME_CENTER: String = "game_center";
     public static const BACK: String = "back";
     public static const SHOP: String = "shop";
     public static const MENU: String = "menu";
@@ -37,6 +54,9 @@ public class GameController extends EventDispatcher {
     public static const REPLAY: String = "replay";
     public static const CONTINUE: String = "continue";
     public static const NEXT: String = "next";
+    public static const SHOW_ENERGY: String = "show_energy";
+    public static const BUY_ENERGY: String = "buy_energy";
+    public static const BUY_MONEY: String = "buy_money";
 
     public static const PRESS: String = "press";
     public static const RELEASE: String = "release";
@@ -71,6 +91,8 @@ public class GameController extends EventDispatcher {
 
     private var _paused: Boolean;
 
+    private var _services: Services;
+
     public function GameController(stage: Stage, resources: ResourcesManager) {
         _stage = stage;
         _resources = resources;
@@ -84,6 +106,11 @@ public class GameController extends EventDispatcher {
         _game = new Game();
         _game.addEventListener(Game.FINISHED, handleFinished);
 
+        _services = Services.getServices();
+        _services.init();
+//        _services.addPurchaseListener(handleIAPSuccess, handleIAPCancel);
+//        _services.getProducts(ShopVO.purchasesIds);
+
         _view = new MainScreen(_refs, this);
         _stage.addChildAt(_view, 0);
 
@@ -92,11 +119,21 @@ public class GameController extends EventDispatcher {
         _ui.addEventListener(RELEASE, handleRelease);
         _ui.addEventListener(AreaSelectScreen.SELECT_AREA, handleSelectArea);
         _ui.addEventListener(LevelSelectScreen.SELECT_LEVEL, handleSelectLevel);
+        _ui.addEventListener(CoinsTile.BUY_COINS, handleBuyCoins);
+        _ui.addEventListener(HeroTile.BUY_HERO, handleBuyPopup);
+        _ui.addEventListener(ClothTile.BUY_CLOTH, handleBuyPopup);
+        _ui.addEventListener(BuyPopup.BUY, handleBuy);
         _stage.addChildAt(_ui, 1);
 
         _stage.addEventListener(UI_ACTION, handleUIAction);
 
-        showAreas();
+        showMenu();
+    }
+
+    private function showMenu():void {
+        _ui.clearScreen();
+
+        _ui.showScreen(MenuScreen.ID);
     }
 
     private function showAreas():void {
@@ -118,13 +155,20 @@ public class GameController extends EventDispatcher {
     }
 
     public function start(level: int):void {
+        if (!LevelVO.getLevel(level).area.opened) {
+            showAreas();
+            return;
+        }
+
         if (_player.energy < 1) {
+            showLevels();
+            _ui.showPopup(RestorePopup.ID);
             return;
         }
 
         _currentLevel = level;
 
-        _game.prepare(_currentLevel, _player.hero);
+        _game.prepare(_currentLevel, _player.hero, _player.cloth);
 
         _resources.addEventListener(ResourcesManager.COMPLETE, handleStart);
         _resources.loadGame(_game.location);
@@ -144,12 +188,16 @@ public class GameController extends EventDispatcher {
         _stage.addEventListener(EnterFrameEvent.ENTER_FRAME, handleEnterFrame);
         _stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
         _stage.addEventListener(KeyboardEvent.KEY_UP, handleKeyUp);
+        _stage.addEventListener("quit", handleQuit);
+
+        pause(false);
     }
 
     private function end():void {
         _stage.removeEventListener(EnterFrameEvent.ENTER_FRAME, handleEnterFrame);
         _stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
         _stage.removeEventListener(KeyboardEvent.KEY_UP, handleKeyUp);
+        _stage.removeEventListener("quit", handleQuit);
 
         _view.destroyGame();
 
@@ -165,6 +213,12 @@ public class GameController extends EventDispatcher {
         }
     }
 
+    private function handleQuit(e: Event):void {
+        if (_game.isRunning) {
+            pause(true);
+        }
+    }
+
 
 
     private function handleSelectArea(e: Event):void {
@@ -174,8 +228,9 @@ public class GameController extends EventDispatcher {
             showLevels();
         } else if (area.unlockcost <= _player.money) {
             _player.unlockArea(area);
+            _ui.showPopup(LocationUnlockedPopup.ID);
         } else {
-
+            _ui.showPopup(NotEnoughPopup.ID);
         }
     }
 
@@ -186,12 +241,41 @@ public class GameController extends EventDispatcher {
         }
     }
 
-    private function handleSelectHero(e: Event):void {
+    private function handleBuyCoins(e: Event):void {
+        var bank: BankVO = e.data as BankVO;
+        // TODO: окно оплаты и подтверждение
+        _player.addMoney(bank.amount);
+    }
+
+    private function handleBuyPopup(e: Event):void {
+        _ui.showPopup(BuyPopup.ID, e.data);
+    }
+
+    private function handleBuy(e: Event):void {
         var hero: HeroVO = e.data as HeroVO;
-        if (hero.opened) {
-            _player.selectHero(hero.id);
-        } else {
-            _player.unlockHero(hero);
+        if (hero) {
+            if (_player.hasHero(hero.id)) {
+                _player.selectHero(hero.id);
+            } else if (_player.money >= hero.unlockcost) {
+                _player.unlockHero(hero);
+                _player.selectHero(hero.id);
+            } else {
+                _ui.showPopup(NotEnoughPopup.ID);
+            }
+            return;
+        }
+
+        var cloth: ClothVO = e.data as ClothVO;
+        if (cloth) {
+            if (_player.hasCloth(cloth.id)) {
+                _player.selectCloth(cloth.id);
+            } else if (_player.money >= cloth.unlockcost) {
+                _player.unlockCloth(cloth);
+                _player.selectCloth(cloth.id);
+            } else {
+                _ui.showPopup(NotEnoughPopup.ID);
+            }
+            return;
         }
     }
 
@@ -199,6 +283,9 @@ public class GameController extends EventDispatcher {
         if (_game.win) {
             var level: LevelVO = LevelVO.getLevel(_currentLevel);
             _player.addMoney(level.bonus);
+
+            // TODO: replace ID
+            _services.reportScore("railbrothers.money", _player.moneyObtained);
 
             _player.unlockLevel(_currentLevel+1);
 
@@ -215,6 +302,8 @@ public class GameController extends EventDispatcher {
         if (!_paused) {
             _game.step(e.passedTime);
         }
+
+        WorldClock.clock.advanceTime(-1);
     }
 
     private function handlePress(e: Event):void {
@@ -289,8 +378,19 @@ public class GameController extends EventDispatcher {
 
     private function handleUIAction(e: Event):void {
         switch (e.data) {
-            case BACK:
+            case LOCAL_GAME:
                 showAreas();
+                break;
+            case GAME_CENTER:
+                // TODO: replace ID
+                _services.showLeaderboard("railbrothers.money");
+                break;
+            case BACK:
+                if (_ui.currentScreen is AreaSelectScreen) {
+                    showMenu();
+                } else {
+                    showAreas();
+                }
                 break;
             case SHOP:
                 showShop();
@@ -311,8 +411,22 @@ public class GameController extends EventDispatcher {
                 break;
             case NEXT:
                 end();
-                // TODO: проверка на открытость локации
                 start(_currentLevel+1);
+                break;
+
+            case SHOW_ENERGY:
+                if (_player.energy==0) {
+                    _ui.showPopup(RestorePopup.ID);
+                }
+                break;
+            case BUY_ENERGY:
+                if (_player.money >= 10000) {
+                    _player.refillEnergy();
+                }
+                break;
+            case BUY_MONEY:
+                _ui.hideScreen();
+                _ui.showScreen(ShopScreen.ID);
                 break;
         }
     }

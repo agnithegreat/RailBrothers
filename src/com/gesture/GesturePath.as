@@ -17,10 +17,13 @@ public class GesturePath {
     public var points:Vector.<Point>;			// Mouse points
     public var moves:Array;						// Mouse gestures
 
+    public var time: Number;
+
     public function GesturePath() {
         touch = new Point();
         points = new <Point>[];
         moves = [];
+        time = 0;
 
         rect = {
             minx:Number.POSITIVE_INFINITY,
@@ -30,7 +33,9 @@ public class GesturePath {
         };
     }
 
-    public function capture():void{
+    public function capture(delta: Number):void{
+        time += delta;
+
         if (!lastPoint) {
             points.push(touch);
             lastPoint = touch.clone();

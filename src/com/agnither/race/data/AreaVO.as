@@ -6,8 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.agnither.race.data {
+import starling.events.EventDispatcher;
 
-public class AreaVO {
+public class AreaVO extends EventDispatcher {
+
+    public static const UPDATE: String = "update_AreaVO";
 
     public static const AREAS: Vector.<AreaVO> = new <AreaVO>[];
     public static function getArea(id: int):AreaVO {
@@ -28,11 +31,21 @@ public class AreaVO {
                 }
             }
 
-            area.opened = area.unlockcost==0;
+            if (area.unlockcost==0) {
+                area.open();
+            }
             AREAS.push(area);
         }
     }
 
-    public var opened: Boolean;
+    private var _opened: Boolean;
+    public function get opened():Boolean {
+        return _opened;
+    }
+
+    public function open():void {
+        _opened = true;
+        dispatchEventWith(UPDATE);
+    }
 }
 }

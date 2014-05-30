@@ -22,6 +22,7 @@ public class IndicationView extends AbstractView {
 
         _roll = new Image(_refs.gui.getTexture("indication_roll.png"));
         _roll.pivotX = _roll.width/2;
+        _roll.x = _back.width/2;
         _roll.y = -40;
         addChild(_roll);
     }

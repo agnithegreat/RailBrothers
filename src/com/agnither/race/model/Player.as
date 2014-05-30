@@ -4,6 +4,7 @@
 package com.agnither.race.model {
 import com.adobe.crypto.MD5;
 import com.agnither.race.data.AreaVO;
+import com.agnither.race.data.ClothVO;
 import com.agnither.race.data.HeroVO;
 import com.agnither.race.data.LevelVO;
 
@@ -25,12 +26,11 @@ public class Player extends EventDispatcher {
         return _data.data.uid;
     }
 
-    public function get level():int {
-        return _data.data.level;
-    }
-
     public function get money():int {
         return _data.data.money;
+    }
+    public function get moneyObtained():int {
+        return _data.data.moneyObtained;
     }
 
     public function get energy():int {
@@ -42,6 +42,10 @@ public class Player extends EventDispatcher {
 
     public function get hero():int {
         return _data.data.hero;
+    }
+
+    public function get cloth():int {
+        return _data.data.cloth;
     }
 
     public function Player() {
@@ -59,13 +63,13 @@ public class Player extends EventDispatcher {
 
         updateAreas();
         updateLevels();
-        updateHeroes();
     }
 
     private function createProgress():void {
         _data.data.deviceID = MD5.hash(String(Math.random()));
         _data.data.money = 0;
-        _data.data.level = 1;
+        _data.data.moneyObtained = 0;
+        _data.data.levels = {1: true};
 
         _data.data.energy = 8;
         _data.data.energyTime = null;
@@ -76,6 +80,12 @@ public class Player extends EventDispatcher {
             var hero: HeroVO = HeroVO.HEROES[key];
             var opened: Boolean = hero.unlockcost==0 ? 1 : 0;
             _data.data.heroes[key] = {"opened": opened};
+        }
+
+        _data.data.cloth = 0;
+        _data.data.clothes = {};
+        for (key in ClothVO.CLOTHES) {
+            _data.data.clothes[key] = {"opened": false};
         }
 
         _data.data.areas = {};
@@ -103,19 +113,15 @@ public class Player extends EventDispatcher {
 
     private function updateAreas():void {
         for (var key:* in _data.data.areas) {
-            AreaVO.getArea(key).opened = Boolean(_data.data.areas[key].opened);
+            if (_data.data.areas[key].opened) {
+                AreaVO.getArea(key).open();
+            }
         }
     }
 
     private function updateLevels():void {
-        for (var i:int = 0; i < level; i++) {
-            LevelVO.getLevel(i+1).opened = true;
-        }
-    }
-
-    private function updateHeroes():void {
-        for (var key:* in _data.data.heroes) {
-            HeroVO.getHero(key).opened = Boolean(_data.data.heroes[key].opened);
+        for (var key: * in _data.data.levels) {
+            LevelVO.getLevel(key).opened = true;
         }
     }
 
@@ -123,14 +129,15 @@ public class Player extends EventDispatcher {
         _data.data.money -= area.unlockcost;
         _data.data.areas[area.id].opened = 1;
 
+        var level: LevelVO = LevelVO.getArea(area.id)[0];
+        unlockLevel(level.id);
+
         updateAreas();
         update();
     }
 
     public function unlockLevel(level: int):void {
-        if (_data.data.level < level) {
-            _data.data.level = level;
-        }
+        _data.data.levels[level] = true;
 
         updateLevels();
         update();
@@ -140,8 +147,11 @@ public class Player extends EventDispatcher {
         _data.data.money -= hero.unlockcost;
         _data.data.heroes[hero.id].opened = true;
 
-        updateHeroes();
         update();
+    }
+
+    public function hasHero(id: int):Boolean {
+        return _data.data.heroes[id].opened;
     }
 
     public function selectHero(id: int):void {
@@ -150,8 +160,26 @@ public class Player extends EventDispatcher {
         update();
     }
 
+    public function unlockCloth(cloth: ClothVO):void {
+        _data.data.money -= cloth.unlockcost;
+        _data.data.clothes[cloth.id].opened = true;
+
+        update();
+    }
+
+    public function hasCloth(id: int):Boolean {
+        return _data.data.clothes[id].opened;
+    }
+
+    public function selectCloth(id: int):void {
+        _data.data.cloth = id;
+
+        update();
+    }
+
     public function addMoney(value: int):void {
         _data.data.money += value;
+        _data.data.moneyObtained += value;
 
         update()
     }
@@ -163,6 +191,15 @@ public class Player extends EventDispatcher {
         }
 
         _data.data.energy--;
+
+        update();
+    }
+
+    public function refillEnergy():void {
+        _data.data.money -= 10000;
+
+        _data.data.energy = 8;
+        _data.data.energyTime = null;
 
         update();
     }

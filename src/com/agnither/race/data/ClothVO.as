@@ -7,35 +7,32 @@
  */
 package com.agnither.race.data {
 
-public class HeroVO {
+public class ClothVO {
 
-    public static const HEROES: Object = {};
-    public static function getHero(id: int):HeroVO {
-        return HEROES[id];
+    public static const CLOTHES: Object = {};
+    public static function getCloth(id: int):ClothVO {
+        return CLOTHES[id];
     }
 
     public var id: int;
-    public var description: String;
+    public var name: String;
     public var speedup: int;
-    public var skin: int;
     public var unlockcost: int;
-    public var hat: String;
-    public var moustache: String;
-    public var jacket: String;
+    public var description: String;
 
     public static function parseData(data: Object):void {
         for each (var object:Object in data) {
-            var hero: HeroVO = new HeroVO();
+            var cloth: ClothVO = new ClothVO();
             for (var key: String in object) {
-                hero[key] = object[key];
+                cloth[key] = object[key];
             }
 
-            HEROES[hero.id] = hero;
+            CLOTHES[cloth.id] = cloth;
         }
     }
 
     public function get icon():String {
-        return "men"+id+".png";
+        return name+".png";
     }
 }
 }

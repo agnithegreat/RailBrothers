@@ -35,7 +35,7 @@ public class GameScreen extends Screen {
         _rail.y = _background.rail;
         addChild(_rail);
 
-        _trolley = new TrolleyView(_refs, _controller.game.player);
+        _trolley = new TrolleyView(_refs, _controller.game.player, _controller.player);
         _trolley.x = 154;
         _trolley.y = _background.rail-30;
         addChild(_trolley);

@@ -9,6 +9,7 @@ package com.agnither.ui {
 import com.agnither.utils.CommonRefs;
 
 import starling.display.Sprite;
+import starling.display.Stage;
 import starling.events.Event;
 
 public class AbstractView extends Sprite {
@@ -35,6 +36,7 @@ public class AbstractView extends Sprite {
     }
 
     public function close():void {
+
     }
 
     private function handleAddedToStage(event: Event):void {
@@ -49,8 +51,8 @@ public class AbstractView extends Sprite {
     }
 
     private function handleRemoved(event: Event):void {
+//        close();
         addEventListener(Event.ADDED_TO_STAGE, handleAdded);
-        close();
     }
 
     public function destroy():void {

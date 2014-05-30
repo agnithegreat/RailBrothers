@@ -3,11 +3,16 @@
  */
 package com.agnither.race.ui {
 import com.agnither.race.GameController;
+import com.agnither.race.ui.popups.BuyPopup;
 import com.agnither.race.ui.popups.DefeatPopup;
+import com.agnither.race.ui.popups.LocationUnlockedPopup;
+import com.agnither.race.ui.popups.NotEnoughPopup;
 import com.agnither.race.ui.popups.PausePopup;
+import com.agnither.race.ui.popups.RestorePopup;
 import com.agnither.race.ui.popups.VictoryPopup;
 import com.agnither.race.ui.screens.area.AreaSelectScreen;
 import com.agnither.race.ui.screens.level.LevelSelectScreen;
+import com.agnither.race.ui.screens.menu.MenuScreen;
 import com.agnither.race.ui.screens.shop.ShopScreen;
 import com.agnither.ui.Popup;
 import com.agnither.ui.Screen;
@@ -26,6 +31,10 @@ public class UI extends Screen {
     private var _controller: GameController;
 
     private var _currentScreen: Screen;
+    public function get currentScreen():Screen {
+        return _currentScreen;
+    }
+
     private var _currentPopup: Popup;
 
     private var _darkness: Quad;
@@ -37,6 +46,7 @@ public class UI extends Screen {
     }
 
     override protected function initialize():void {
+        SCREENS[MenuScreen.ID] = new MenuScreen(_refs);
         SCREENS[AreaSelectScreen.ID] = new AreaSelectScreen(_refs, _controller);
         SCREENS[LevelSelectScreen.ID] = new LevelSelectScreen(_refs, _controller);
         SCREENS[ShopScreen.ID] = new ShopScreen(_refs, _controller);
@@ -45,6 +55,10 @@ public class UI extends Screen {
         POPUPS[PausePopup.ID] = new PausePopup(_refs);
         POPUPS[DefeatPopup.ID] = new DefeatPopup(_refs);
         POPUPS[VictoryPopup.ID] = new VictoryPopup(_refs);
+        POPUPS[RestorePopup.ID] = new RestorePopup(_refs);
+        POPUPS[NotEnoughPopup.ID] = new NotEnoughPopup(_refs);
+        POPUPS[LocationUnlockedPopup.ID] = new LocationUnlockedPopup(_refs);
+        POPUPS[BuyPopup.ID] = new BuyPopup(_refs, _controller.player);
 
         _darkness = new Quad(stage.stageWidth, stage.stageHeight, 0, false);
         _darkness.alpha = 0.5;
@@ -62,7 +76,7 @@ public class UI extends Screen {
     }
     public function hideScreen():void {
         if (_currentScreen) {
-            removeChild(_currentScreen);
+            _currentScreen.close();
             _currentScreen = null;
         }
     }
@@ -90,7 +104,7 @@ public class UI extends Screen {
                 removeChild(_darkness);
             }
             _currentPopup.removeEventListener(Popup.CLOSE, hidePopup);
-            removeChild(_currentPopup);
+            _currentPopup.close();
             _currentPopup = null;
         }
     }

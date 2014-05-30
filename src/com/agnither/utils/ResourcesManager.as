@@ -22,6 +22,11 @@ public class ResourcesManager extends EventDispatcher {
         return _gui;
     }
 
+    private var _animations: AssetManager;
+    public function get animations():AssetManager {
+        return _animations;
+    }
+
     private var _game: AssetManager;
     public function get game():AssetManager {
         return _game;
@@ -32,13 +37,14 @@ public class ResourcesManager extends EventDispatcher {
 
         _main = new AssetManager(_info.scaleFactor);
         _gui = new AssetManager(_info.scaleFactor);
+        _animations = new AssetManager(_info.scaleFactor);
         _game = new AssetManager(_info.scaleFactor);
     }
 
     public function loadMain():void {
         _main.enqueue(
-                "config/config.json",
-                "particles/snow.pex"
+            "config/config.json",
+            "particles/snow.pex"
         );
         _main.loadQueue(handleProgress);
     }
@@ -46,15 +52,28 @@ public class ResourcesManager extends EventDispatcher {
     public function loadGUI():void {
         for (var i:int = 0; i < Fonts.fonts.length; i++) {
             _gui.enqueue(
-                    "textures/"+_info.font+"/fonts/"+Fonts.fonts[i]+".png",
-                    "textures/"+_info.font+"/fonts/"+Fonts.fonts[i]+".xml"
+                "textures/"+_info.font+"/fonts/"+Fonts.fonts[i]+".png",
+                "textures/"+_info.font+"/fonts/"+Fonts.fonts[i]+".xml"
             );
         }
         _gui.enqueue(
-                "textures/"+_info.art+"/gui/gui.png",
-                "textures/"+_info.art+"/gui/gui.xml"
+            "textures/"+_info.art+"/gui/backs.png",
+            "textures/"+_info.art+"/gui/backs.xml",
+            "textures/"+_info.art+"/gui/gui.png",
+            "textures/"+_info.art+"/gui/gui.xml",
+            "textures/"+_info.art+"/gui/shop.png",
+            "textures/"+_info.art+"/gui/shop.xml"
         );
         _gui.loadQueue(handleProgress);
+    }
+
+    public function loadAnimations():void {
+        _animations.enqueue(
+            "textures/"+_info.art+"/animation/skeleton.json",
+            "textures/"+_info.art+"/animation/texture.json",
+            "textures/"+_info.art+"/animation/texture.png"
+        );
+        _animations.loadQueue(handleProgress);
     }
 
     public function loadGame(location: String):void {

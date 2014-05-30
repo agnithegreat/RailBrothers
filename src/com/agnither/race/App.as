@@ -7,8 +7,11 @@
  */
 package com.agnither.race {
 import com.agnither.race.data.AreaVO;
+import com.agnither.race.data.BankVO;
+import com.agnither.race.data.ClothVO;
 import com.agnither.race.data.HeroVO;
 import com.agnither.race.data.LevelVO;
+import com.agnither.race.view.Animations;
 import com.agnither.utils.DeviceResInfo;
 import com.agnither.utils.ResourcesManager;
 
@@ -43,7 +46,9 @@ public class App extends Sprite {
 
         loadConfig();
 
-        _resources.addEventListener(ResourcesManager.COMPLETE, handleInit);
+        Animations.init(_resources.animations);
+
+        _resources.addEventListener(ResourcesManager.COMPLETE, handleLoadGUI);
         _resources.loadGUI();
     }
 
@@ -51,13 +56,24 @@ public class App extends Sprite {
         var config: Object = _resources.main.getObject("config");
 
         HeroVO.parseData(config.heroes);
+        ClothVO.parseData(config.clothes);
         AreaVO.parseData(config.areas);
         LevelVO.parseData(config.levels);
+        BankVO.parseData(config.bank);
 //        SoundVO.parseData(config.sounds);
+    }
+
+    private function handleLoadGUI():void {
+        _resources.removeEventListener(ResourcesManager.COMPLETE, handleLoadGUI);
+
+        _resources.addEventListener(ResourcesManager.COMPLETE, handleInit);
+        _resources.loadAnimations();
     }
 
     private function handleInit():void {
         _resources.removeEventListener(ResourcesManager.COMPLETE, handleInit);
+
+        Animations.loadAnimation();
 
         _controller.init();
     }

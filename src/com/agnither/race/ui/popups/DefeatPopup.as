@@ -45,7 +45,7 @@ public class DefeatPopup extends Popup {
 
         _titleStroke = new TextField(_back.width, 200, "YOU LOSE!", "popup_title_big_stroke", -1, 0xFFFFFF);
         _titleStroke.x = int((_back.width-_titleStroke.width)/2)-7;
-        _titleStroke.y = 17;
+        _titleStroke.y = 15;
         addChild(_titleStroke);
 
         _title = new TextField(_back.width, 200, "YOU LOSE!", "popup_title_big", -1, 0xFFFFFF);
